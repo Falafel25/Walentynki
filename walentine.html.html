@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walentynka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: pink;
+            background-size: cover;
+            text-align: center;
+            padding: 50px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: black;
+        }
+
+        h1 {
+            color: red;
+            font-size: 6em;
+        }
+
+        #calendar, #food-question, #result {
+            display: none;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .checkbox-wrapper div {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cześć Piękna</h1>
+    <img src="https://i.postimg.cc/K8KPRg0t/ham2.png">
+    <img src="https://i.postimg.cc/hP2sJncR/23.png" width="600" height="200"/>
+    <img src="https://i.postimg.cc/K8KPRg0t/ham2.png">
+
+    <div id="question">
+        <p>Będziesz moją Walentynką?</p>
+        <button onclick="yesAnswer()">Tak</button>
+        <button onclick="noAnswer()">Nie</button>
+    </div>
+
+    <div id="calendar">
+        <p>Kiedy jesteś wolna?</p>
+        <input type="date" id="date-picker">
+        <br><br>
+        <button onclick="confirmDate()">Ok</button>
+    </div>
+
+    <div id="food-question">
+        <p>Co chciałabyś zjeść?</p>
+        <div class="checkbox-wrapper">
+            <div>
+                <img src="https://i.postimg.cc/G2vz9shX/Pizza.png" alt="Pizza" width="200">
+                <br>
+                <input type="checkbox" id="pizza" name="food" value="Pizza">
+                <label for="pizza">Pizza</label>
+            </div>
+            <div>
+                <img src="https://i.postimg.cc/bNpVDLnk/sushi.png" alt="Sushi" width="200">
+                <br>
+                <input type="checkbox" id="sushi" name="food" value="Sushi">
+                <label for="sushi">Sushi</label>
+            </div>
+            <div>
+                <img src="https://i.postimg.cc/ZqCMYRdQ/ramen.png" alt="ramen" width="200">
+                <br>
+                <input type="checkbox" id="ramen" name="food" value="ramen">
+                <label for="ramen">Ramen</label>
+            </div>
+            <div>
+                <img src="https://i.postimg.cc/J0cTYHfs/spagetti.png" alt="Spagetti" width="200">
+                <br>
+                <input type="checkbox" id="spagetti" name="food" value="spagetti">
+                <label for="spagetti">Spagetti</label>
+            </div>
+        </div>
+        <br>
+        <button onclick="confirmFood()">Dalej</button>
+    </div>
+
+    <div id="result">
+        <p id="selected-date"></p>
+        <img id="chosen-photo" alt="Twoja wybrana walentynka">
+        <img id="selected-food" alt="Wybrane jedzenie">
+    </div>
+
+    <script>
+        function yesAnswer() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('calendar').style.display = 'block';
+        }
+
+        function noAnswer() {
+            alert('Aha! Okey?');
+        }
+
+        function confirmDate() {
+            const date = document.getElementById('date-picker').value;
+            if (date) {
+                document.getElementById('calendar').style.display = 'none';
+                document.getElementById('food-question').style.display = 'block';
+                document.getElementById('selected-date').textContent = `Wybrana data: ${date}`;
+            } else {
+                alert('Poproszę Datę');
+            }
+        }
+
+        function confirmFood() {
+            const selectedFoods = [];
+            document.querySelectorAll('input[name="food"]:checked').forEach(checkbox => {
+                selectedFoods.push(checkbox.value);
+            });
+
+            if (selectedFoods.length > 0) {
+                const selectedFoodImages = document.querySelectorAll('input[name="food"]:checked');
+                const firstFoodImage = selectedFoodImages[0].parentElement.querySelector('img').src;
+
+                document.getElementById('food-question').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('chosen-photo').src = 'https://i.postimg.cc/CKkb4pT1/12s.png'; // Replace with chosen image
+                document.getElementById('selected-food').src = firstFoodImage; // Display first selected food image
+            } else {
+                alert('Proszę wybrać co najmniej jedno jedzenie!');
+            }
+        }
+    </script>
+</body>
+</html>
